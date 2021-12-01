@@ -72,14 +72,15 @@ function log(obj) {
 // window.setTimeout(callback, 2000);
 
 
-// let counter = 10;
-// const interval = window.setInterval(() => {
-//   console.log(counter);
-//   if(counter === 0) {
-//     window.clearInterval(interval);
-//   }
-//   counter--; 
-// }, 1000);
+let counter = 10;
+const timerInterval = window.setInterval(() => {
+  console.log(counter);
+  if(counter === 0) {
+    window.clearInterval(timerInterval);
+  }
+  counter--; 
+}, 1000);
+console.log('timerInterval', timerInterval);
 
 
 // ✅ Scope
@@ -122,6 +123,8 @@ function log(obj) {
 */
 
 // CODE HERE
+let currentSong = "example"
+let songDuration = 60 * 3 + 34;
 
 // ✅ Defining Functions
 
@@ -133,16 +136,36 @@ function log(obj) {
 
 // CODE HERE
 
+function formatDuration(duration) {
+  // const hours = Math.floor(duration / 60*60);
+  // const minutes = Math.floor(duration / 60);
+  // const seconds = duration % 60;
+
+  const seconds = duration % 60;
+  let minutes = Math.floor(duration / 60);
+  let hours = Math.floor(minutes / 60);
+  minutes = minutes % 60;
+  return `${hours ? (hours + ':') : ''}${minutes}:${seconds}`
+}
+
 // uncomment the below to test it out
-// formatDuration(216) // should return '3:36'
+console.log(formatDuration(216)) // should return '3:36'
+console.log(formatDuration(4216)) // should return '1:10:16'
 
 /*
 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 
 3. Create a function called `playSong` that will take a song as an argument and set `currentSong` to the argument passed.
 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 
+*/
 
 // CODE HERE
 
+function playSong(song) {
+  currentSong = song;
+}
+
+
+/*
 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 🚧 
 */
 
@@ -165,12 +188,12 @@ let timeSpent = 0;
 
 // CODE HERE
 function startTimer(seconds) {
-  interval = setInterval(() => {
+  interval = window.setInterval(() => {
     timeSpent++;
     seconds--;
     console.log(`${seconds} seconds remaining`)
     if (seconds === 0) {
-      clearInterval(interval);
+      window.clearInterval(interval);
       console.log('Timer expired!')
     }
   }, 1000)
@@ -181,6 +204,6 @@ function startTimer(seconds) {
 
 // CODE HERE
 function stopTimer() {
-  clearInterval(interval);
+  window.clearInterval(interval);
   return `Time Spent on Task: ${timeSpent} seconds`
 }

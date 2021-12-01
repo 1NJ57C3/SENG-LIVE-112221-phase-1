@@ -40,6 +40,10 @@ function renderTask(task) {
   taskLabelEl.textContent = task.label;
   dueDateEl.textContent = task.dueDate;
   completedEl.innerHTML = `<i class="far ${task.complete ? 'fa-check-square' : 'fa-square'} text-4xl text-green-300 cursor-pointer"></i>`;
+  /* Task 2 actual placement - placement allows us to interact with the data being parsed to maintain syncronicity with DOM  */
+  completedEl.addEventListener('click', (e) => {
+    toggleComplete(task);
+  })
   task.element = li;
   return li;
 }
@@ -81,3 +85,37 @@ function toggleComplete(task) {
 }
 
 // 🚧 Task 1: add Event Listener/Handler for handling the New Task form submission here
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelector(`#newTask`).addEventListener(`submit`, (event) => {
+    event.preventDefault();
+    addTask(todoList,taskLabel,dueDate);
+    /* Grant's Code */
+    // addTask(todoList, document.querySelector(`#labelInput`).value, document.querySelector(`#dueDateInput`).value)
+    /* alternative targeting method */
+    // e.target.labelInput.value, e.target.dueDate.value
+    /* Original solution with Grant, discovered function was prebuilt */
+    const taskLabel = document.querySelector(`#labelInput`).value;
+    const dueDate = document.querySelector(`#dueDateInput`).value;
+    // const task = {
+    //   label: label,
+    //   dueDate: dueDate,
+    //   complete: false
+    // }
+    // todoList.push(task);
+  }) // end of Task 1
+ 
+  /* Task 2 */
+  // Grant's methodology - No good, won't tie in properly with data/event
+  // document.querySelectorAll(`span.completed`).addEventListener(`click`, (event => {
+  //   if (
+  //   event.target.childNode.classList.replace(`far fa-check-square text-4xl text-green-300 cursor-pointer`)
+  //   ){
+  //     asdf 
+  //   } else if (
+  //     event.target.childNode.classList.replace(`far fa-square text-4xl text-green-300 cursor-pointer`)
+  //   ){
+  //     asdf
+  //   }
+  // }))
+})

@@ -22,7 +22,7 @@ function getTodoListElement() {
 // Fill in the _____ below with the appropriate code.
 
 function renderTask(task) {
-  const li = _____
+  const li = document.createElement('li')
   li.className = 'flex justify-between';
   li.innerHTML = `
   <span class="task-label">
@@ -36,11 +36,11 @@ function renderTask(task) {
   </span>
   `;
   // target the .task-label and .due-date spans 
-  const taskLabelEl = _____
-  const dueDateEl = _____
+  const taskLabelEl = li.querySelector('.task-label');
+  const dueDateEl = li.querySelector('due-date');
   // fill them in with the appropriate content from the task object
-  taskLabelEl._____ = _____;
-  dueDateEl._____ = _____;
+  taskLabelEl.innerText = task.label;
+  // dueDateEl.innerText = task.dueDate;
   task.element = li;
   return li;
 }
@@ -48,7 +48,9 @@ function renderTask(task) {
 // 🚧 Task 1: Iterate over the tasks in the todoList, render the task and append it to the todoList element in the DOM
 function loadTodoList(todoList) {
   const target = getTodoListElement();
-  _____
+  todoList.forEach(task => 
+    target.append(renderTask(task))
+    )
 }
 
 loadTodoList(todoList);

@@ -96,6 +96,11 @@ function getPlayerElement() {
 
 function renderSong(song) {
   const li = document.createElement('li');
+  li.addEventListener('click', (eventHandler) => {
+    loadSongIntoPlayer(song); /* This EventListener is the code that makes the playlist playable */
+    li.classList.add('bg-gray-100') /* This makes the Listener add a CSS class on click*/
+  })
+  
   li.className = "flex justify-between p-2 pr-4 cursor-pointer";
   li.innerHTML = `
   <div>
@@ -155,6 +160,10 @@ function loadSongIntoPlayer(song) {
   getArtistElement().textContent = song.artist;
   getPlayCountElement().textContent = song.playCount === 1 ? '1 play' : `${song.playCount} plays`;
   getPlayerElement().src = `https://www.youtube.com/embed/${extractVideoID(song.youtubeLink)}`;
+  /* New code next lines*/
+  document.querySelectorAll('#playlist li').forEach(li => {
+    li.classList.remove('bg-gray-100');
+  })
 }
 
 function songsByArtist(playlist, artist) {
@@ -164,3 +173,33 @@ function songsByArtist(playlist, artist) {
     target.append(renderSong(song))
   })
 }
+
+/* Event Listener for submit button behavior */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#newSong').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = event.target.nameInput.value;
+    const artist = event.target.artistInput.value;
+    const youtubeLink = event.target.youtubeLink.value;
+    const duration = formattedDurationToSeconds(event.target.durationInput.value);
+    const song = {
+      name: name,
+      artist: artist,
+      youtubeLink: youtubeLink,
+      duration: duration
+    };
+    addSongToPlaylist(playlist, song);
+    event.target.reset();
+
+    // // *** Notes (Getters) from Browser Console:
+    // event.target.querySelectorAll('input') // looking for input IDs
+    // event.target.nameInput // example target
+    // event.target.querySelector('#nameInput'); //alternative
+    // // event.target.getElementById(''); alternative maybe
+    // event.target.querySelector('#nameInput').value // value of #nameInput
+    // event.target.artistInput.value // syntax
+    // const name = event.target.nameInput.value // const to call/test
+    // const name = event.target.artistInput.value // const to call/test
+  })
+})
+

@@ -55,84 +55,98 @@ function formatDuration(duration) {
   const seconds = duration % 60; // duration - minutes * 60
   const minutes = Math.floor(duration / 60) % 60;
   const hours = Math.floor(duration / 3600);
-  return `${hours ? (hours + ':') : ''}${minutes}:${seconds}`
+  return `${hours ? (hours + ':') : ''}${minutes}:${seconds < 10 ? '0'+seconds : seconds}`
 }
 
 // ✅ Accessing Data in Arrays
 
 // this function should return the first element
 function retrieveFirst(playlist) {
-
+  return playlist[0]
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// console.log('retrieveFirst', retrieveFirst(playlist))
-// console.log('playlist after retrieveFirst', playlist)
+console.log('retrieveFirst', retrieveFirst(playlist))
+console.log('playlist after retrieveFirst', playlist)
 
 // ✅ adding and removing values
 
 function addSongToBeginningOfPlaylist(playlist, song) {
-
+  // non-destructive version: [playlist..., song] (spread operator)
+  return playlist.unshift(song)
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// console.log('addSongToBeginningOfPlaylist', addSongToBeginningOfPlaylist(playlist, {
-//   name: "What'd I Say",
-//   artist: 'Ray Charles',
-//   duration: 255,
-//   playCount: 0,
-//   youtubeLink: 'https://www.youtube.com/watch?v=HAjeSS3kktA'
-// })) 
-// console.log('playlist after addSongToBeginningOfPlaylist', playlist)
+console.log('addSongToBeginningOfPlaylist', addSongToBeginningOfPlaylist(playlist, {
+  name: "What'd I Say",
+  artist: 'Ray Charles',
+  duration: 255,
+  playCount: 0,
+  youtubeLink: 'https://www.youtube.com/watch?v=HAjeSS3kktA'
+})) 
+console.log('playlist after addSongToBeginningOfPlaylist', playlist)
 
 function addSongToEndOfPlaylist(playlist, song) {
-
+  // non-destructive version: [...playlist, song] (spread operator)
+  return playlist.push(song)
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// console.log('addSongToEndOfPlaylist',addSongToEndOfPlaylist(playlist, {
-//   name: "Georgia On My Mind",
-//   artist: 'Ray Charles',
-//   duration: 217,
-//   playCount: 0,
-//   youtubeLink: 'https://www.youtube.com/watch?v=ggGzE5KfCio'
-// })) 
-// console.log('playlist after addSongToEndOfPlaylist', playlist)
+console.log('addSongToEndOfPlaylist',addSongToEndOfPlaylist(playlist, {
+  name: "Georgia On My Mind",
+  artist: 'Ray Charles',
+  duration: 217,
+  playCount: 0,
+  youtubeLink: 'https://www.youtube.com/watch?v=ggGzE5KfCio'
+})) 
+console.log('playlist after addSongToEndOfPlaylist', playlist)
 
 function removeLastSongFromPlaylist(playlist) {
-
+  // last element: playlist[playlist.length-1]
+  // non-destructive version: playlist.slice(lastElement) || playlist.slice(0, -1) || playlist.slice().pop()
+    return playlist.pop()
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// console.log('removeLastSongFromPlaylist', removeLastSongFromPlaylist(playlist))
-// console.log('playlist after removeLastSongFromPlaylist', playlist)
+console.log('removeLastSongFromPlaylist', removeLastSongFromPlaylist(playlist))
+console.log('playlist after removeLastSongFromPlaylist', playlist)
 
 function removeFirstSongFromPlaylist(playlist) {
-
+  // non-destructive version: 
+  return playlist.shift()
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// console.log('removeFirstSongFromPlaylist', removeFirstSongFromPlaylist(playlist))
-// console.log('playlist after removeFirstSongFromPlaylist', playlist)
+console.log('removeFirstSongFromPlaylist', removeFirstSongFromPlaylist(playlist))
+console.log('playlist after removeFirstSongFromPlaylist', playlist)
 
 // ✅ Iteration
 
 function logSongNames(playlist) {
-
+  return playlist.forEach(song => console.log(song.name))
+  // return playlist.map(song => song.name).map(console.log)
+  // for (const song of playlist) {
+  //   console.log(song.name)
+  // }
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// logSongNames(playlist) 
-// console.log('playlist after logSongNames', playlist)
+logSongNames(playlist) 
+console.log('playlist after logSongNames', playlist)
 
 function calculatePlaylistDuration(playlist) {
-
+  return playlist.reduce((summedDurations, currentSong) => {
+    console.log('summedDurations', summedDurations);
+    console.log('currentSong', currentSong);
+    return summedDurations + currentSong.duration
+  }, 0) //initial value config for summedDurations -- if none, previousValue initializes to first value in the array and currentValue initializes to the second value in the array
+  return formatDuration(totalDuration)
 }
 
 // // 👟👟👟 uncomment the lines below to test
@@ -142,13 +156,13 @@ function calculatePlaylistDuration(playlist) {
 
 
 function songsByArtist(playlist, artist) {
-
+  return playlist.filter(song => song.artist === artist)
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// console.log('songsByArtist', songsByArtist(playlist, "Queen")) // uncomment this to test
-// console.log('playlist after songsByArtist', playlist)
+console.log('songsByArtist', songsByArtist(playlist, "Queen")) // uncomment this to test
+console.log('playlist after songsByArtist', playlist)
 
 // what method of iteration should we use here?
 function renameArtist(playlist, oldArtistName, newArtistName) {
@@ -186,13 +200,18 @@ const todoList = [
 // 🚧 Task 1: `addTask(todoList, task)`
 
 function addTask(todoList, task) {
-
+  const newTask = {
+    'task' : task,
+    completed : false
+  }
+  todoList.push(newTask);
+  return newTask;
 }
 
 // // 👟👟👟 uncomment the lines below to test
 
-// console.log('addTask', addTask(todoList, 'Practice using the filter method'))
-// console.log('todoList after addTask', todoList)
+console.log('addTask', addTask(todoList, 'Practice using the filter method'))
+console.log('todoList after addTask', todoList)
 
 
 
@@ -201,7 +220,12 @@ function addTask(todoList, task) {
 // 🚧 Task 2: `markComplete(todoList, task)`
 
 function markComplete(todoList, task) {
-
+  const foundTask = todoList.find(t => t.task === task)
+  if (foundTask) {
+    foundTask.complete = true;
+    return foundTask;
+  }
+  return 'task not found'
 }
 
 // // 👟👟👟 uncomment the lines below to test

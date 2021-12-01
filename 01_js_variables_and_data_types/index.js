@@ -127,21 +127,24 @@ console.log("------------------------");
 
     // 🚧 "time" will be a random number between 0 and 24
     // ____ time = Math.ceil(Math.random()*24);
+    const time = Math.ceil(Math.random()*24);
     // log a message to the console indicating whether "time" is in the AM or PM
 
     // If "time" is less than or equal to 12...
     // if (❓) {
-
-        // console.log(`${time} is in the AM.`)
+    if (time < 12) {
+        console.log(`${time} is in the AM.`)
 
     // In all other cases...
-    // } else {
+    } else {
 
-        // console.log(`${time} is in the PM.`)
+        console.log(`${time} is in the PM.`)
 
-    // }
+    }
 
     // ✨ BONUS: Try refactoring the above expression using a ternary operator.
+
+    console.log(`${time} is in the ${time < 12 ? 'AM' : 'PM'}`)
 
     // 🚨 Be sure to comment out any code above before proceeding to the next activity.
 
@@ -161,9 +164,13 @@ console.log("------------------------");
     // to different values to
 
     // ____ today = new Date("2021-11-22");
+    const today = new Date("2021-11-22");
     // ____ yesterday = new Date("2021-11-21");
-    // ____ tomororow = new Date("2021-11-23");
+    const yesterday = new Date("2021-11-21");
+    // ____ tomorrow = new Date("2021-11-23");
+    const tomorrow = new Date("2021-11-23");
     // ____ otherDate = yesterday;
+    let otherDate = yesterday;
 
 
 
@@ -178,3 +185,11 @@ console.log("------------------------");
         // } else {
         // ...
         // }
+
+        if (otherDate < today) {
+        "This date is in the past"
+        } else if (otherDate > today) {
+        "This date is in the future"
+        } else if (otherDate = today) {
+            "This date is today!"
+        }
